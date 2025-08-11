@@ -24,12 +24,11 @@ cp config/apiKeys.template.ts config/apiKeys.ts
    - Application restrictions: Android apps / iOS apps
    - API restrictions: Chỉ chọn APIs cần thiết
 
-#### 🤖 Groq API Key (cho AI storytelling)
+#### 🤖 Gemini API Key (cho AI storytelling)
 
-1. Vào [Groq Console](https://console.groq.com/)
-2. Đăng ký account
-3. Tạo API key mới
-4. Copy key
+1. Vào [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Click "Create API key"
+3. Copy key
 
 #### 🗺️ OpenRouteService API Key (backup routing)
 
@@ -46,13 +45,13 @@ export const API_KEYS = {
     "your-google-maps-key-1",
     "your-google-maps-key-2", // Backup keys
   ],
-  GROQ: ["your-groq-key-1", "your-groq-key-2"],
+  GEMINI: ["your-gemini-key-1", "your-gemini-key-2"],
   OPENROUTE_SERVICE: ["your-ors-key-1", "your-ors-key-2"],
 };
 
 export const API_CONFIG = {
   ENABLE_GOOGLE_MAPS: true,
-  ENABLE_GROQ: true,
+  ENABLE_GEMINI: true,
   ENABLE_ORS: true,
   AUTO_SWITCH_KEYS: true,
   DEBUG_API_CALLS: false,
