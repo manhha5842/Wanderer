@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Wanderer",
-    "slug": "Wanderer",
+    "slug": "wanderer",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,14 +9,25 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Wanderer cần truy cập vị trí để tạo tuyến đường và kích hoạt câu chuyện tại các checkpoint.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Wanderer cần truy cập vị trí để theo dõi hành trình và phát câu chuyện phù hợp.",
+        "NSMotionUsageDescription": "Ứng dụng sử dụng cảm biến chuyển động để đếm bước chân."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_BACKGROUND_LOCATION",
+        "ACTIVITY_RECOGNITION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -25,6 +36,12 @@
     },
     "plugins": [
       "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Wanderer cần truy cập vị trí để tạo tuyến đường và kích hoạt câu chuyện tại các checkpoint."
+        }
+      ],
       [
         "expo-splash-screen",
         {

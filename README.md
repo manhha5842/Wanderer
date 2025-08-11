@@ -1,50 +1,180 @@
-# Welcome to your Expo app 👋
+# 🚶‍♂️ Wanderer - Interactive Walking Story App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Ứng dụng khám phá thành phố với trải nghiệm storytelling AI tương tác và route finding thông minh.
 
-## Get started
+## ✨ Features
 
-1. Install dependencies
+- 🗺️ **Smart Route Finding**: Google Maps + OpenRouteService + Enhanced fallback
+- 🤖 **AI Storytelling**: Groq API với multiple key rotation
+- 📍 **Interactive Map**: Tap để chọn checkpoint và xem route real-time
+- 🎯 **Location Tracking**: GPS tracking với progress calculation
+- 🔄 **API Key Management**: Secure key rotation system
+- 📱 **Cross Platform**: React Native + Expo
 
-   ```bash
-   npm install
-   ```
+## 🏗️ Architecture
 
-2. Start the app
+### Core Services
 
-   ```bash
-   npx expo start
-   ```
+- **routeService**: Multi-provider routing (Google Maps → ORS → Fallback)
+- **googleMapsService**: Google Directions API integration
+- **geminiService**: AI story generation với Groq
+- **locationService**: GPS tracking và progress monitoring
+- **apiKeyManager**: Secure key management với auto-rotation
 
-In the output, you'll find options to open the app in a
+### Key Components
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- **PrepareScreen**: Interactive map với route selection
+- **WalkingScreen**: Real-time tracking với story narration
+- **MapView**: react-native-maps với polyline rendering
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## 🔑 API Setup (QUAN TRỌNG)
 
-## Get a fresh project
-
-When you're ready, run:
+### Bước 1: Copy API Keys Template
 
 ```bash
-npm run reset-project
+cp config/apiKeys.template.ts config/apiKeys.ts
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Bước 2: Cấu hình API Keys
 
-## Learn more
+Chỉnh sửa `config/apiKeys.ts`:
 
-To learn more about developing your project with Expo, look at the following resources:
+```typescript
+export const API_KEYS = {
+  GOOGLE_MAPS: [
+    "YOUR_GOOGLE_MAPS_KEY_1", // Replace with real key
+    "YOUR_GOOGLE_MAPS_KEY_2", // Backup key (optional)
+  ],
+  GROQ: [
+    "YOUR_GROQ_KEY_1", // Replace with real key
+    "YOUR_GROQ_KEY_2", // Backup key (optional)
+  ],
+  OPENROUTE_SERVICE: [
+    "YOUR_ORS_KEY_1", // Replace with real key
+    "YOUR_ORS_KEY_2", // Backup key (optional)
+  ],
+};
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Cách lấy API Keys:
 
-## Join the community
+#### 🗺️ Google Maps API
 
-Join our community of developers creating universal apps.
+1. [Google Cloud Console](https://console.cloud.google.com/) → Create Project
+2. Enable APIs: Maps SDK, Directions API, Geocoding API
+3. Create Credentials → API Key
+4. Restrict key cho security
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### 🤖 Groq API
+
+1. [Groq Console](https://console.groq.com/) → Sign up
+2. Create API Key
+3. Copy key
+
+#### 🗺️ OpenRouteService
+
+1. [OpenRouteService](https://openrouteservice.org/) → Sign up
+2. Create API Key
+3. Copy key
+
+## 🚀 Installation & Run
+
+```bash
+# Install dependencies
+npm install
+
+# Copy API keys (QUAN TRỌNG!)
+cp config/apiKeys.template.ts config/apiKeys.ts
+# Sau đó edit config/apiKeys.ts với keys thật
+
+# Start development server
+npm start
+
+# Run on device
+npm run android  # hoặc
+npm run ios
+```
+
+## 🛠️ Project Structure
+
+```
+src/
+├── components/           # UI Components
+│   ├── PrepareScreen.tsx    # Map-based route selection
+│   ├── WalkingScreen.tsx    # Real-time tracking
+│   └── MapView.tsx          # Interactive map component
+├── services/             # Core Services
+│   ├── routeService.ts      # Multi-provider routing
+│   ├── googleMapsService.ts # Google Maps integration
+│   ├── geminiService.ts     # AI storytelling
+│   ├── locationService.ts   # GPS tracking
+│   └── storyService.ts      # Story management
+├── config/              # Configuration
+│   ├── apiKeyManager.ts     # Secure key management
+│   ├── apiKeys.template.ts  # Keys template
+│   └── apiKeys.ts          # Real keys (gitignored)
+└── types/               # TypeScript types
+```
+
+## 🔒 Security Features
+
+- ✅ API keys stored in gitignored files
+- ✅ Template-based configuration
+- ✅ Automatic key rotation on limits
+- ✅ Multiple backup keys per service
+- ✅ No hardcoded credentials
+
+## 🧭 User Flow
+
+1. **Start Screen**: Chọn mode và settings
+2. **Prepare Screen**:
+   - Tap map để chọn checkpoint
+   - Xem route được tính real-time
+   - Configure story settings
+3. **Walking Screen**:
+   - Real-time GPS tracking
+   - AI story narration
+   - Progress visualization
+4. **Summary Screen**: Review journey và story
+
+## 🔧 Troubleshooting
+
+### "No Google Maps API keys configured"
+
+```bash
+# Check if apiKeys.ts exists
+ls config/apiKeys.ts
+
+# Make sure GOOGLE_MAPS array has valid keys
+```
+
+### Route calculation errors
+
+1. Check Google Maps API key có enable Directions API
+2. Verify ORS key còn quota
+3. App sẽ fallback sang enhanced algorithm nếu tất cả fail
+
+### App crashes on map
+
+1. Ensure react-native-maps được setup đúng
+2. Check Google Maps key có enable Maps SDK
+3. Restart Metro bundler
+
+## 📊 API Key Management Features
+
+- **Auto-rotation**: Switch keys khi hit limits
+- **Health monitoring**: Track key status và quota
+- **Fallback system**: Multiple providers per service
+- **Debug logging**: Monitor API calls và key usage
+
+## 🌟 Advanced Features
+
+- **Smart Routing**: Combines Google Maps accuracy với fallback algorithms
+- **Dynamic Storytelling**: AI adapts stories based on real locations
+- **Progress Tracking**: Real-time distance/time calculations
+- **Interactive Maps**: Touch-based route planning
+- **Cross-platform**: Single codebase cho iOS và Android
+
+---
+
+Developed with ❤️ using React Native + Expo

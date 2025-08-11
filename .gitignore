@@ -33,6 +33,21 @@ yarn-error.*
 # local env files
 .env*.local
 
+# API Keys - IMPORTANT: Never commit real API keys
+config/apiKeys.ts
+config/apiKeys.js
+
+# Sensitive configuration
+config/secrets.ts
+config/secrets.js
+*.secret.ts
+*.secret.js
+
+# Backup files that might contain sensitive data
+*.old.ts
+*.old.js
+README.new.md
+
 # typescript
 *.tsbuildinfo
 
